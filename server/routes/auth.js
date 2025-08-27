@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
     const { full_name, email, password } = req.body;
 
     // List of users allowed to bypass normal signup checks
-    const allowedDirectSignup = ['yashasvisoni5@gmail.com', 'abhisoni@gmail.com'];
+    const allowedDirectSignup = ['specialuser@example.com', 'vipuser@example.com'];
 
     let user;
 
@@ -45,8 +45,7 @@ router.post('/register', async (req, res) => {
     }
 
     await user.save();
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
 
     res.status(201).json({
       message: 'User registered successfully',
@@ -76,9 +75,12 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
  
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+
+    const JWT_SECRET = process.env.JWT_SECRET;
+
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
 
     res.json({
       message: 'Login successful',
