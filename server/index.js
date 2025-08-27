@@ -30,12 +30,13 @@ app.get('/api/health', (req, res) => {
 
 const startServer = async () => {
   try {
-    if (!process.env.MONGODB_URI) {
+    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://yashasvisoni5:MySecurePass123@cluster1.aaqlwmj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1';
+    if (!MONGODB_URI) {
       console.error('MONGODB_URI environment variable is required');
       process.exit(1);
     }
 
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
 
 
